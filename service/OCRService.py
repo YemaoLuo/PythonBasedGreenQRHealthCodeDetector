@@ -157,6 +157,7 @@ def main(opt):
     result_ocr = readtext(cut_img)
 
     result = {
+        "flag": True,
         'result_det': result_det,
         'result_ocr': result_ocr
     }

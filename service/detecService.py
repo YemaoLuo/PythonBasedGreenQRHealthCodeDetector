@@ -145,6 +145,7 @@ def main(opt):
         axis=0).astype("int")
 
     result = {
+        'flag': True,
         'confidence': str(pred_confes[0]),
         'start_point': str((box[0], box[1])),
         'end_point': str((box[2], box[3])),
