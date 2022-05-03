@@ -3,7 +3,6 @@ Macao Health Code Green Code Recognition and OCR Information Recognition
 
 澳门健康码绿码识别与OCR信息识别
 
----
 
 # To get started
 + Clone the project using git clone
@@ -13,7 +12,8 @@ Macao Health Code Green Code Recognition and OCR Information Recognition
 + The default port is 8000 hence u should visit 'http://localhost:8000' to test the result
 + If u want to use a customize port u can rerun step 3 by command 'python manage.py runserver CUSTOMIZEPORT'
 
----
+### [API Documentation](https://console-docs.apipost.cn/preview/a6153428c5452dc3/0d8b811c4bb62b6e)
+
 
 # 开始使用
 + 利用 git clone 下载整个项目
@@ -22,3 +22,5 @@ Macao Health Code Green Code Recognition and OCR Information Recognition
 + 使用命令 'python manage.py runserver' 启动项目
 + 默认端口是 8000 因此你应该访问 'http://localhost:8000' 来测试结果
 + 如果您想使用自定义端口，您可以通过命令 'python manage.py runserver CUSTOMIZEPORT' 重新运行第 3 步
+
+### [API文档](https://console-docs.apipost.cn/preview/a6153428c5452dc3/0d8b811c4bb62b6e)
