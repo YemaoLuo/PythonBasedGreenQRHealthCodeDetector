@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="For Json viewer">
+    <title>ApiPost接口文档</title>
+    <link href="https://img.cdn.apipost.cn/v6/docs/img/doc_favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://img.cdn.apipost.cn/docs/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="https://img.cdn.apipost.cn/docs/css/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://img.cdn.apipost.cn/docs/css/github.css">
+    <script type="text/javascript"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/jquery-3.4.1.min.js"></script>
+    <script src="https://img.cdn.apipost.cn/docs/js/colResizable-1.6.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/marked.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/template-web.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/highlight.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/clipboard.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/statics/libs/crypto-js/crypto-js.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/json5.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/enc.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/json-viewer/json-viewer.min.js"></script>
+    <script src="https://img.cdn.apipost.cn/docs/js/indent.js"></script>
+
+    <script>
+        Date.prototype.format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1,                 //月份
+                "d+": this.getDate(),                    //日
+                "h+": this.getHours(),                   //小时
+                "m+": this.getMinutes(),                 //分
+                "s+": this.getSeconds(),                 //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds()             //毫秒
+            };
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            }
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                }
+            }
+            return fmt;
+        }
+    </script>
+    <style type="text/css">
+        .preview-markdown table td {
+            position: relative;
+        }
+
+        .indent-fold {
+            border: 0;
+            background: transparent;
+            position: absolute;
+            left: -25px;
+            top: 10px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            text-align: center;
+            width: 15px;
+            height: 15px;
+            padding: 0;
+        }
+
+        .indent-fold img {
+            position: static !important;
+            transform: translateY(0);
+        }
+
+        .indent-fold.right img {
+            transform: rotate(0);
+        }
+
+        .indent-fold.down img {
+            transform: rotate(-90deg);
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://img.cdn.apipost.cn/docs/css/docs.css">
+    <link rel="stylesheet" href="https://img.cdn.apipost.cn/docs/css/v6.css">
+    <link rel="stylesheet" href="https://img.cdn.apipost.cn/docs/css/jsonview.css">
+    <style>
+       .body .box{
+            height: calc(100vh - 60px);
+        }
+
+        .JCLRgrip .JColResizer {
+            cursor: col-resize;
+        }
+
+        table tr td,
+        th {
+            text-indent: 8px;
+        }
+
+        .JColResizer>tbody>tr>td,
+        .JColResizer>tbody>tr>th {
+            overflow: visible !important;
+        }
+    </style>
+</head>
+
+<body>
+<!-- <body> -->
+<div class="body">
+    <div class="doc-head">
+        <div class="left">
+            <a href="https://www.apipost.cn/" target="_blank" title="ApiPost接口与文档管理系统">
+                <img src="https://img.cdn.apipost.cn/v6/docs/img/logov6.svg" alt="ApiPost接口与文档管理系统">
+            </a>
+        </div>
+        <div class="container">
+
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-first" style="display: flex; flex-direction: column;justify-content: flex-end;">
+            <div class="sreachInput">
+                <img src="https://img.cdn.apipost.cn/v6/docs/img/search.svg" alt="">
+                <input type="text" class="search" placeholder="搜索目录/接口">
+            </div>
+            <div class="title">
+
+            </div>
+            <div class="target top" data-target_id="001">
+                <div class="globals_select"></div>
+                全局参数
+            </div>
+            <div class="new">
+
+            </div>
+            <!-- <a href="https://www.toutiao.com/i6960487351701275149/" id = "advertise" target="_blank" style="display: inline-block; width: 300px;height: 70px;background: url('https://img.cdn.apipost.cn/cdn/images/a-long-letter.svg?0424') no-repeat left"></a> -->
+            <div class="bar"></div>
+            <script type="text/html" id="template-target-sidebar-list-tpl">
+                {{each list value}}
+                <div>
+                    <div class="target {{value.target_type == 'folder' ? 'folder':'api'}}"
+                         data-type="{{value.target_type}}"
+                         data-target_id="{{value.local_target_id}}">
+                        {{if value.target_type == 'folder'}}
+                        <span>
+                       <span class="control">
+                           {{if value.children}}
+                           <div class="folder_select">
+
+                           </div>
+                           {{/if}}
+                        </span>
+                       <span>
+                         <div class="img">
+
+                         </div>
+                         {{value.name}}
+                        </span>
+                       </span>
+                        {{else}}
+                        <span>
+                         <em class="{{((value.target_type == 'doc') || (value.target_type == 'example' && value.is_doc == 1)) ? 'DOC' : value.target_type != 'example' ? value.method : value.method}}">{{(value.target_type == 'doc' || (value.target_type == 'example' && value.is_doc == '1')) ? '文本' :  value.method == 'OPTIONS' ? 'OPT' : value.method == 'DELETE' ? 'DEL' : value.method == 'UNLINK' ? 'UNLNK' : value.method == 'UNLOCK' ? 'UNLCK' : value.method == 'PROPFIND' ? 'PROP' : value.method}}</em>
+                       <span>{{value.name}}</span>
+                       </span>
+                        <span></span>
+                        {{/if}}
+                    </div>
+                    {{if value.children!=null}}
+                    {{each value.children data}}
+                    {{set a=data["index"]=3}}
+                    {{include 'list1' data}}
+                    {{/each}}
+                    {{/if}}
+                </div>
+                {{/each}}
+            </script>
+            <script type="text/html" id="list1">
+                <div>
+                    <div class="target {{target_type == 'folder' ? 'folder':'api'}}" data-type="{{target_type}}"
+                         data-target_id="{{local_target_id}}"
+                         style="padding-left:{{index * 15}}px">
+                        {{if target_type == 'folder'}}
+                        <span>
+                           <span class="control">
+                              {{if children}}
+                              <div class="folder_select">
+
+                              </div>
+                              {{/if}}
+                            </span>
+                        <span>
+                           <div class="img">
+
+                         </div>
+                          {{name}}
+                        </span>
+                       </span>
+                        {{else}}
+                        <span>
+                          <em class="{{((target_type == 'doc') || (target_type == 'example' && is_doc == 1)) ? 'DOC' : target_type != 'example' ? method : method}}">{{(target_type == 'doc' || (target_type == 'example' && is_doc == '1')) ? '文本' :  method == 'OPTIONS' ? 'OPT' : method == 'DELETE' ? 'DEL' : method == 'UNLINK' ? 'UNLNK' : method == 'UNLOCK' ? 'UNLCK' : method == 'PROPFIND' ? 'PROP' : method}}</em>
+                          <span>{{name}}</span>
+                          </span>
+                        <span></span>
+                        {{/if}}
+                    </div>
+                    {{if children!=null}}
+                    {{each children data}}
+                    {{if index}}
+                    {{set b=data.index=index+1}}
+                    {{else}}
+                    {{set c=data["index"] = 3}}
+                    {{/if}}
+                    {{include 'list1' data}}
+                    {{/each}}
+                    {{/if}}
+                </div>
+            </script>
+        </div>
+        <div class="box-third">
+            <div class=" preview-markdown">
+
+            </div>
+            <div style="width: 100%;">
+
+            </div>
+            <div class="box-nav" style="background: #fff;">
+                <ul class="api template-nav-menu">
+                    <script type="text/html" id="template-nav-menu-tpl">
+                        <!--                            {{if target_type == "api" || target_type == "folder" || (target_type == "example" && is_doc == 0) }}-->
+                        {{if request.description}}
+                        <li class="cur nav-btn" data-id="0" style="display: block"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                接口说明</a></li>
+                        <li class="nav-btn" data-id="1"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                基本信息</a></li>
+                        {{else}}
+                        <li class="nav-btn" data-id="0" style="display: none"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                接口说明</a></li>
+                        <li class="cur nav-btn" data-id="1"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                基本信息</a></li>
+                        {{/if}}
+                        <!--                            {{/if}}-->
+                        {{if request.header.parameter.length > 0 || request.query.parameter.length > 0 ||
+                        request.resful.parameter.length > 0 || request.body.parameter.length>0 || request.body.raw !=''}}
+                        <li class="nav-btn" data-id="2" style="display: block"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                请求参数</a></li>
+                        {{else}}
+                        <li class="nav-btn" data-id="2" style="display: none"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                请求参数</a></li>
+                        {{/if}}
+                        <ul>
+                            {{if request.header.parameter.length > 0}}
+                            <li class="nav-btn" data-id="3" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    header参数及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="3" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    header参数及说明</a></li>
+                            {{/if}}
+                            {{if request.query.parameter.length > 0}}
+                            <li class="nav-btn" data-id="4" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    query参数及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="4" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    query参数及说明</a></li>
+                            {{/if}}
+                            {{if request.resful.parameter.length > 0}}
+                            <li class="nav-btn" data-id="5" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    路径参数及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="5" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    路径参数及说明</a></li>
+                            {{/if}}
+
+                            {{if request?.auth?.type && request?.auth?.type != 'noauth'}}
+                            <li class="nav-btn" data-id="6" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    认证及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="6" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    认证及说明</a></li>
+                            {{/if}}
+                            {{if request.body.parameter.length>0 || request.body.raw !='' }}
+                            <li class="nav-btn" data-id="7" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    body参数及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="7" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    body参数及说明</a></li>
+                            {{/if}}
+                            <!--                        <li class="nav-btn" data-id="6"><a href="javascript:;">预执行脚本</a></li>-->
+                            <!--                        <li class="nav-btn" data-id="7"><a href="javascript:;">后执行脚本</a></li>-->
+
+                        </ul>
+                        {{if response.success.raw || response.success.parameter.length > 0 || response.error.raw ||
+                        response.error.parameter.length > 0}}
+                        <li class="nav-btn" data-id="8" style="display: block"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                响应示例</a></li>
+                        {{else}}
+                        <li class="nav-btn" data-id="8" style="display:none"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                响应示例</a></li>
+                        <!-- <ul>-->
+                        <!--                            {{if response.success.raw || response.success.parameter.length > 0}}-->
+                        <!--                            <li class="nav-btn" data-id="9"><a href="javascript:;">成功响应示例</a></li>-->
+                        <!--                            {{/if}}-->
+                        <!---->
+                        <!--                            {{if response.error.raw || response.error.parameter.length > 0}}-->
+                        <!--                            <li class="nav-btn" data-id="10"><a href="javascript:;">失败响应示例</a></li>-->
+                        <!--                            {{/if}}-->
+                        <!--                        </ul> -->
+                        {{/if}}
+                    </script>
+                </ul>
+
+                <ul class="folder">
+                    <li class="cur nav-folder-btn" data-id="0"><a href="javascript:;">
+                            <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                            目录说明</a></li>
+                    <li class="nav-folder-btn" data-id="1"><a href="javascript:;">
+                            <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                            公共参数</a></li>
+                    <ul>
+                        <li class="nav-folder-btn" data-id="2"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                header参数及说明</a></li>
+                        <li class="nav-folder-btn" data-id="3"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                query参数及说明</a></li>
+                        <li class="nav-folder-btn" data-id="4"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                body参数及说明</a></li>
+                        <li class="nav-folder-btn" data-id="5"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                认证及说明</a></li>
+                        <!-- <li class="nav-folder-btn" data-id="4"><a href="javascript:;">预执行脚本</a></li>-->
+                        <!-- <li class="nav-folder-btn" data-id="5"><a href="javascript:;">后执行脚本</a></li>-->
+                    </ul>
+                </ul>
+
+            </div>
+            <script type="text/html" id="template-example-doc-tpl">
+                <h2 class="top" style="display: block">
+                    <div style="display: flex;align-items: center;">
+                        <span>{{name}}</span>
+                        {{if target_type != 'folder'}}
+                        <!-- <button title="复制当前文档/接口数据到剪贴板" class="CopyCurrentData" data-clipboard-action="copy" data-clipboard-text="" data-target_id="{{local_target_id}}">
+                          <img src="https://img.cdn.apipost.cn/v6/docs/img/copy.svg" alt="" style="margin-right:2px">
+                          复制接口
+                          <a  style="margin-left:2px" href="https://wiki.apipost.cn/document/00091641-1e36-490d-9caf-3e47cd38bcde/0b622ce8-68c0-4a00-88ba-287bdae336ad" target="_blank" rel="noopener noreferrer">
+                            <img style="cursor: pointer;" src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg"  alt="">
+                          </a>
+                        </button> -->
+                        <!-- <button class="opneApis" data-target_id="{{local_target_id}}">
+                          <img src="https://img.cdn.apipost.cn/v6/docs/img/open.svg" alt="">
+                          在工作台打开
+                        </button> -->
+                        <!-- <a href="https://wiki.apipost.cn/document/00091641-1e36-490d-9caf-3e47cd38bcde/0b622ce8-68c0-4a00-88ba-287bdae336ad" title="什么是复制接口？" target="_blank"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a> -->
+                        {{/if}}
+                    </div>
+                    <span class="metadata">创建人：{{create_users.create_user}} &nbsp;&nbsp;&nbsp;&nbsp; 最后更新：{{create_users.update_user}} &nbsp;&nbsp;&nbsp;&nbsp;更新时间：{{@dateFormat(update_dtime * 1000,'yyyy-MM-dd hh:mm:ss')}}</span>
+                </h2>
+                {{if target_type == 'folder'}}
+                <h3 class="title" style="{{request.description ? 'visibility: visible;':'visibility:hidden;height:0;margin:0;'}}" ><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/book.svg" alt="">
+                    </a> 目录说明 <i class="fa fa-angle-down"></i></h3>
+                {{if request.description}}
+                <div class="editor-preview desc markdown-section">
+                    {{@marked(request.description)}}
+                </div>
+                {{/if}}
+                {{else}}
+                <h3 class="title" style="{{request.description ? 'visibility: visible;':'visibility:hidden;height:0;margin:0;'}}" ><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/book.svg" alt="">
+                    </a> 接口说明 <i class="fa fa-angle-down"></i></h3>
+                {{if request.description}}
+                <div class="editor-preview desc markdown-section">
+                    {{@marked(request.description)}}
+                </div>
+                {{/if}}
+                {{/if}}
+                {{if (target_type == 'example' && is_doc == '0') || target_type == 'api'}}
+                <h3 class="title"><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/info.svg" alt="">
+                    </a> 基本信息 <i class="fa fa-angle-down"></i></h3>
+                <ul class="editor-preview-info">
+                    <li><strong>接口状态：</strong> <code class="span" style="color: {{markColor}};">{{markName}}</code></li>
+                    <li><strong>接口URL：</strong> <code class="span">{{request.url ? request.url : 'url为空...'}}</code>
+                    </li>
+                    <li><strong>请求方式：</strong> <code class="span">{{method}}</code></li>
+                    <li><strong>Content-Type：</strong> <code class="span">{{request.body.mode}}</code></li>
+                </ul>
+
+                <h3 class="title" style="{{request.header.parameter.length > 0 || request.query.parameter.length > 0 || request.resful.parameter.length > 0 || request.body.parameter.length>0 ||request.body.raw !='' || (request?.auth?.type && request?.auth?.type != 'noauth') ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/globals.svg" alt="">
+                    </a> 请求参数 <i class="fa fa-angle-down"></i></h3>
+                {{if request.header.parameter.length > 0 || request.query.parameter.length > 0 || request.resful.parameter.length > 0 || request.body.parameter.length>0 ||request.body.raw !='' || (request?.auth?.type && request?.auth?.type != 'noauth')}}
+                <div class="markdown-request">
+                    <h4 class="title" style="{{request.header.parameter.length > 0? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Header参数及说明</h4>
+                    {{if request.header.parameter.length > 0}}
+                    <div>
+                        <table>
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <th>参数类型</th>
+                                <th>是否必填</th>
+                                <th>参数描述</th>
+                            </tr>
+                            {{each request.header.parameter item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value }}
+                                    {{/if}}
+                                </td>
+                                <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td>
+                                <td>{{item.not_null == "1" ? '是' : '否'}}</td>
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+
+                    <h4 class="title" style="{{request.query.parameter.length > 0 ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Query参数及说明</h4>
+                    {{if request.query.parameter.length > 0}}
+                    <div>
+                        <table>
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <th>参数类型</th>
+                                <th>是否必填</th>
+                                <th>参数描述</th>
+                            </tr>
+
+                            {{each request.query.parameter item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value }}
+                                    {{/if}}
+                                </td>
+                                <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td>
+                                <td>{{item.not_null == "1" ? '是' : '否'}}</td>
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+
+                    <h4 class="title" style="{{request.resful.parameter.length ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> 路径参数及说明</h4>
+                    {{if request.resful.parameter.length > 0}}
+                    <div>
+                        <table>
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <!--
+                                <th>参数类型</th>
+                                <th>是否必填</th>
+                                -->
+                                <th>参数描述</th>
+                            </tr>
+
+                            {{each request.resful.parameter item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value }}
+                                    {{/if}}
+                                </td>
+                                <!--
+                                <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td>
+                                <td>{{item.not_null == "1" ? '是' : '否'}}</td>
+                                -->
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+
+                    <h4 class="title" style="{{ request?.auth.type && request?.auth.type != 'noauth' ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> 认证及说明</h4>
+                    {{if request?.auth.type && request?.auth.type != 'noauth'}}
+                    <div>
+                        {{if request?.auth?.type == 'kv'}}
+                        <table class="auth">
+                            <tr>
+                                <td>认证类型：私密键值对</td>
+                                <td> 键： {{request?.auth?.kv?.key}}</td>
+                                <td> 值：{{request?.auth?.kv?.value}}</td>
+                            </tr>
+                        </table>
+                        {{/if}}
+                        {{if request.auth.type == 'basic'}}
+                        <table class="auth">
+                            <tr>
+                                <td>认证类型：Basic auth认证</td>
+                                <td>用户名： {{request?.auth?.basic?.username}}</td>
+                                <td>密码： {{request?.auth?.basic?.password}}</td>
+                            </tr>
+                        </table>
+                        {{/if}}
+                        {{if request?.auth?.type == 'bearer'}}
+                        <table class="auth">
+                            <tr>
+                                <td>认证类型：Bearer auth认证</td>
+                                <td>Token：{{request?.auth?.bearer?.key}}</td>
+                            </tr>
+                        </table>
+                        {{/if}}
+                    </div>
+                    {{/if}}
+
+                    <h4 class="title" style="{{request.body.parameter.length > 0 || request.body.raw !='' ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> body参数及说明</h4>
+                    {{if request.body.parameter.length>0 ||request.body.raw !='' }}
+                    {{if request.body.mode == 'form-data' || request.body.mode == 'multipart/form-data' ||
+                    request.body.mode =='application/x-www-form-urlencoded' || request.body.mode=="urlencoded"}}
+                    <div>
+                        <table>
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <th>参数类型</th>
+                                <th>是否必填</th>
+                                <th>参数描述</th>
+                            </tr>
+                            {{if request.body.parameter.length > 0}}
+                            {{each request.body.parameter item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value }}
+                                    {{/if}}
+                                </td>
+                                <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td>
+                                <td>{{item.not_null == "1" ? '是' : '否'}}</td>
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                            {{else}}
+                            <tr>
+                                <td colspan="5" style="text-align:center">暂无数据</td>
+                            </tr>
+                            {{/if}}
+                        </table>
+                    </div>
+                    {{else}}
+                    <div class="editor-preview">
+                        <input type="hidden" id="request_body_raw_editor_input" value="{{request.body.raw}}">
+                        <pre id="request_body_raw_editor_json"><code class="hljs json">{{request.body.raw}}</code></pre>
+
+                        <!-- <pre><code class="hljs json">{{request.body.raw}}</code></pre> -->
+                    </div>
+                    {{if request.body.raw_para.length > 0}}
+                    <h4><a href="javascript:;" class="maodian"></a> 字段描述</h4>
+                    <table>
+                        <tr>
+                            <th>参数名</th>
+                            <th>示例值</th>
+                            <th>参数类型</th>
+                            <!-- <th>是否必填</th> -->
+                            <th>参数描述</th>
+                        </tr>
+                        {{each request.body.raw_para item}}
+                        {{if item.key}}
+                        <tr>
+                            <td>{{@keyFormat(item.key)}}</td>
+                            <td>{{item.value == '' ? '-' : item.value }}</td>
+                            <td>{{item.field_type}}</td>
+                            <!-- <td>{{item.not_null == "1" ? '是' : '否'}}</td> -->
+                            <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                        </tr>
+                        {{/if}}
+                        {{/each}}
+                    </table>
+                    {{/if}}
+                    {{/if}}
+                    <!--                    {{if request.event.pre_script != ''}}-->
+                    <!--                    <h4 class="title"><a href="javascript:;" class="maodian"></a> 预执行脚本</h4>-->
+                    <!--                    <div class="editor-preview">-->
+                    <!--                        <pre><code class="hljs">{{request.event.pre_script}}</code></pre>-->
+                    <!--                    </div>-->
+                    <!--                    {{/if}}-->
+                    <!--                    {{if request.event.test != ''}}-->
+                    <!--                    <h4 class="title"><a href="javascript:;" class="maodian"></a> 后执行脚本</h4>-->
+                    <!--                    <div class="editor-preview">-->
+                    <!--                        <pre><code class="hljs">{{request.event.test}}</code></pre>-->
+                    <!--                    </div>-->
+                    <!--                    {{/if}}-->
+
+                    {{/if}}
+                </div>
+                {{/if}}
+                <!--respond-->
+
+                <h3 class="title" style="{{response.success.raw || response.success.parameter.length > 0 || response.error.raw || response.error.parameter.length > 0 ? 'visibility: visible;':'visibility: hidden'}}"><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/globals.svg" alt="">
+                    </a> 响应示例<i class="fa fa-angle-down"></i></h3>
+                {{if response.success.raw || response.success.parameter.length > 0 || response.error.raw || response.error.parameter.length > 0}}
+                <div class="markdown-response">
+                    {{if response.success.raw || response.success.parameter.length > 0}}
+                    <h4 ><a href="javascript:;" class="maodian"></a> 成功响应示例</h4>
+                    <div class="editor-preview">
+                        <input type="hidden" id="response_success_editor_input" value="{{response.success.raw}}">
+                        <pre id="response_success_editor_json"><code class=" json">{{response.success.raw}}</code></pre>
+                    </div>
+                    {{if response.success.parameter.length > 0}}
+                    <h4><a href="javascript:;" class="maodian"></a> 字段描述</h4>
+                    <table class="response-parameter">
+                        <tr>
+                            <th>参数名</th>
+                            <th>示例值</th>
+                            <th>参数类型</th>
+                            <th>参数描述</th>
+                        </tr>
+                        {{each response.success.parameter item}}
+                        <tr>
+                            <td>{{@keyFormat(item.key)}}</td>
+                            <td>{{item.value == '' ? '-' : item.value }}</td>
+                            <td>{{item.field_type}}</td>
+                            <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                    {{/if}}
+                    {{/if}}
+                    {{if response.error.raw || response.error.parameter.length > 0}}
+                    <h4 ><a href="javascript:;" class="maodian"></a> 失败响应示例</h4>
+                    <div class="editor-preview">
+                        <input type="hidden" id="response_error_editor_input" value="{{response.error.raw}}">
+                        <pre id="response_error_editor_json">
+                            <code class="hljs json">{{response.error.raw}}</code>
+                        </pre>
+                    </div>
+                    {{if response.error.parameter.length > 0}}
+                    <h4><a href="javascript:;" class="maodian"></a> 字段描述</h4>
+                    <table class="response-parameter">
+                        <tr>
+                            <th>参数名</th>
+                            <th>示例值</th>
+                            <th>参数类型</th>
+                            <th>参数描述</th>
+                        </tr>
+                        {{each response.error.parameter item}}
+                        <tr>
+                            <td>{{@keyFormat(item.key)}}</td>
+                            <td>{{item.value == '' ? '-' : item.value }}</td>
+                            <td>{{item.field_type}}</td>
+                            <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                    {{/if}}
+                    {{/if}}
+                </div>
+                {{/if}}
+                {{else if target_type == 'folder'}}
+                <h3 class="title"><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/globals.svg" alt="">
+                    </a>公共参数<i class="fa fa-angle-down"></i></h3>
+                <div class="markdown-request">
+                    <h4 class="title" style="{{ request.header.length > 0 ?'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Header参数及说明</h4>
+                    {{if request.header.length > 0}}
+                    <div>
+                        <table class="header">
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <!-- <th>参数类型</th> -->
+                                <th>参数描述</th>
+                            </tr>
+                            {{each request.header item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value}}
+                                    {{/if}}
+                                </td>
+                                <!-- <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td> -->
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+                    <h4 class="title" style="{{ request.query.length > 0 ?'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Query参数及说明</h4>
+                    {{if request.query.length > 0}}
+                    <div>
+                        <table class="query">
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <!-- <th>参数类型</th> -->
+                                <th>参数描述</th>
+                            </tr>
+                            {{each request.query item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value}}
+                                    {{/if}}
+                                </td>
+                                <!-- <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td> -->
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+                    <h4 class="title" style="{{ request.body.length > 0 ?'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Body参数及说明</h4>
+                    {{if request.body.length > 0}}
+                    <div>
+                        <table class="body">
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <!-- <th>参数类型</th> -->
+                                <th>参数描述</th>
+                            </tr>
+                            {{each request.body item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value}}
+                                    {{/if}}
+                                </td>
+                                <!-- <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td> -->
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+                    {{if request?.auth?.type != 'noauth' && request?.auth?.type}}
+                    <h4 class="title">认证及说明</h4>
+                    {{if request?.auth?.type == 'kv'}}
+                    <table class="auth">
+                        <tr>
+                            <td>认证类型：私密键值对</td>
+                            <td>键：{{request?.auth?.kv?.key}}</td>
+                            <td>值：{{request?.auth?.kv?.value}}</td>
+                        </tr>
+                    </table>
+                    {{/if}}
+                    {{if request.auth.type == 'basic'}}
+                    <table class="auth">
+                        <tr>
+                            <td>认证类型：Basic auth认证</td>
+                            <td>用户名：{{request?.auth?.basic?.username}}</td>
+                            <td>密码：{{request?.auth?.basic?.password}}</td>
+                        </tr>
+                    </table>
+                    {{/if}}
+                    {{if request?.auth?.type == 'bearer'}}
+                    <table class="auth">
+                        <tr>
+                            <td>认证类型：Bearer auth认证</td>
+                            <td>Token：{{request?.auth?.bearer?.key}}</td>
+                        </tr>
+                    </table>
+                    {{/if}}
+                    {{/if}}
+                </div>
+                <!--respond-->
+                {{/if}}
+                <div class="footer" style="text-align: center;margin: 35px 0;height: 50px">本文档由 <a href="https://www.apipost.cn/" target="_blank" style="color:#3a86ff">APIPOST接口调试与管理工具</a> 生成</div>
+            </script>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="golbal-env-tpl">
+    <h2 class="top">
+        <span>全局参数</span>
+        <span class="metadata">
+            创建时间：{{@dateFormat(create_dtime * 1000,'yyyy-MM-dd hh:mm:ss')}}
+            {{if expire_time != -1}}
+                <span style="color: #f44336; margin-left: 15px; font-weight: bold;"> 过期时间： {{@dateFormat(expire_time * 1000,'yyyy-MM-dd hh:mm:ss')}}</span>
+            {{/if}}
+        </span>
+
+    </h2>
+    <div class="editor-preview desc">
+    <!-- <p>本文档是carrotPeanutButter的私有项目的接口文档，以下为当前项目下的公共参数。</p> -->
+    </div>
+
+    <h3 class="title">
+        <a href="javascript:;" class="maodian">
+            <img src="https://img.cdn.apipost.cn/v6/docs/img/globals.svg" alt="">
+        </a>
+        全局参数
+        {{if vars?.request?.header?.length > 0 || vars?.request?.query?.length > 0 || vars?.request?.body?.length > 0 || vars?.auth?.type != 'noauth'}}
+        <i class="fa fa-angle-down"></i>
+        {{/if}}
+    </h3>
+    {{if vars?.request?.header?.length > 0 || vars?.request?.query?.length > 0 || vars?.request?.body?.length > 0 || vars?.auth?.type != 'noauth'}}
+    <div>
+        {{if vars.request.header.length > 0}}
+        <h4>Header参数及说明</h4>
+        <table>
+            <tr>
+                <th>参数名</th>
+                <th>参数值</th>
+                <th>参数描述</th>
+            </tr>
+            {{each vars.request.header item}}
+            <tr>
+                <td>
+                    {{if item.key_var}}
+                    {{item.key_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.key}} 生成
+                    </div>
+                    {{else}}
+                    {{item.key}}
+                    {{/if}}
+                </td>
+                <td>
+                    {{if item.value_var}}
+                    {{item.value_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.value}} 生成
+                    </div>
+                    {{else}}
+                    {{item.value == '' ? '-' : item.value }}
+                    {{/if}}
+                </td>
+                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+
+        {{if vars.request.query.length > 0}}
+        <h4>Query参数及说明</h4>
+        <table>
+            <tr>
+                <th>参数名</th>
+                <th>参数值</th>
+                <th>参数描述</th>
+            </tr>
+
+            {{each vars.request.query item}}
+            <tr>
+                <td>
+                    {{if item.key_var}}
+                    {{item.key_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.key}} 生成
+                    </div>
+                    {{else}}
+                    {{item.key}}
+                    {{/if}}
+                </td>
+                <td>
+                    {{if item.value_var}}
+                    {{item.value_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.value}} 生成
+                    </div>
+                    {{else}}
+                    {{item.value == '' ? '-' : item.value }}
+                    {{/if}}
+                </td>
+                <td>
+                    <pre>{{item.description == '' ? '-' : item.description }}</pre>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+
+        {{if vars?.request?.body?.length > 0}}
+        <h4>Body参数及说明</h4>
+        <table>
+            <tr>
+                <th>参数名</th>
+                <th>参数值</th>
+                <th>参数描述</th>
+            </tr>
+            {{each vars?.request?.body item}}
+            <tr>
+                <td>
+                    {{if item.key_var}}
+                    {{item.key_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.key}} 生成
+                    </div>
+                    {{else}}
+                    {{item.key}}
+                    {{/if}}
+                </td>
+                <td>
+                    {{if item.value_var}}
+                    {{item.value_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.value}} 生成
+                    </div>
+                    {{else}}
+                    {{item.value == '' ? '-' : item.value }}
+                    {{/if}}
+                </td>
+                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+        {{if vars?.auth?.type != 'noauth'}}
+        <h4>认证及说明</h4>
+        {{if vars?.auth?.type == 'kv'}}
+        <table>
+            <tr>
+                <td>认证类型：私密键值对</td>
+                <td>键：{{vars?.auth?.kv?.key}}</td>
+                <td>值：{{vars?.auth?.kv?.value}}</td>
+            </tr>
+        </table>
+        {{/if}}
+        {{if vars.auth.type == 'basic'}}
+        <table>
+            <tr>
+                <td>认证类型：Basic auth认证</td>
+                <td>用户名：{{vars?.auth?.basic?.username}}</td>
+                <td>密码：{{vars?.auth?.basic?.password}}</td>
+            </tr>
+        </table>
+        {{/if}}
+        {{if vars?.auth?.type == 'bearer'}}
+        <table>
+            <tr>
+                <td>认证类型：Bearer auth认证</td>
+                <td>Token：{{vars?.auth?.bearer?.key}}</td>
+            </tr>
+        </table>
+        {{/if}}
+        {{/if}}
+        <!--        {{if vars.script.pre_script != ""}}-->
+        <!--        <h4 class="title"><a href="javascript:;" class="maodian"></a> 预执行脚本</h4>-->
+        <!--        <div class="editor-preview">-->
+        <!--            <pre><code class="hljs">{{vars.script.pre_script}}</code></pre>-->
+        <!--        </div>-->
+        <!--        {{/if}}-->
+        <!--        {{if vars.script.test != "" }}-->
+        <!--        <h4 class="title"><a href="javascript:;" class="maodian"></a> 后执行脚本</h4>-->
+        <!--        <div class="editor-preview">-->
+        <!--            <pre><code class="hljs">{{vars.script.test}}</code></pre>-->
+        <!--        </div>-->
+        <!--        {{/if}}-->
+    </div>
+    {{else}}
+    <div style="text-align: center;display: block"><img src="https://img.cdn.apipost.cn/v6/docs/img/emptyglobals.svg" style="width: 100px;margin:20px auto 20px;">暂无参数</div>
+    {{/if}}
+
+    <div class="footer" style="text-align: center;margin: 35px 24px;height: 50px;">本文档由 <a href="https://www.apipost.cn/" target="_blank" style="color:#3a86ff">APIPOST接口调试与管理工具</a> 生成</div>
+</script>
+<script type="text/html" id="doc-head-tpl">
+    <div class="export">
+
+    </div>
+    <div class="user_photo">
+        <img src="{{portrait}}"alt="">
+    </div>
+</script>
+<script type="text/html" id="project-name-tpl">
+    <img src="https://img.cdn.apipost.cn/v6/docs/img/project.svg" alt="">
+    {{project_name}}
+</script>
+<script>
+    template.defaults.imports.marked = function (md) {
+        marked.setOptions({
+            renderer: new marked.Renderer(),
+            highlight: function (code) {
+                return hljs.highlight('javascript', code).value;
+            },
+            breaks: true
+        });
+        return marked(md).replace(/<pre>/g, "<pre class='hljs javascript'>");
+    }
+    function dateFormat(date, format) {
+        date = new Date(date);
+        var map = {
+            "M": date.getMonth() + 1, //月份
+            "d": date.getDate(), //日
+            "h": date.getHours(), //小时
+            "m": date.getMinutes(), //分
+            "s": date.getSeconds(), //秒
+            "q": Math.floor((date.getMonth() + 3) / 3), //季度
+            "S": date.getMilliseconds() //毫秒
+        };
+        format = format.replace(/([yMdhmsqS])+/g, function (all, t) {
+            var v = map[t];
+            if (v !== undefined) {
+                if (all.length > 1) {
+                    v = '0' + v;
+                    v = v.substr(v.length - 2);
+                }
+                return v;
+            } else if (t === 'y') {
+                return (date.getFullYear() + '').substr(4 - all.length);
+            }
+            return all;
+        });
+        return format;
+    };
+    template.defaults.imports.dateFormat = dateFormat;
+    function dragControllerDiv(resize, left, mid, box) {
+        for (let i = 0; i < resize.length; i++) {
+            // 鼠标按下事件
+            resize[i].onmousedown = function (e) {
+                //颜色改变提醒
+                resize[i].style.borderColor = "#9d9d9d";
+                var startX = e.clientX;
+                resize[i].left = resize[i].offsetLeft;
+                // 鼠标拖动事件
+                document.onmousemove = function (e) {
+                    var endX = e.clientX;
+                    var moveLen = resize[i].left + (endX - startX); // （endx-startx）=移动的距离。resize[i].left+移动的距离=左边区域最后的宽度
+                    var maxT = box[i].clientWidth - resize[i].offsetWidth; // 容器宽度 - 左边区域的宽度 = 右边区域的宽度
+
+                    if (moveLen < 300) moveLen = 300; // 左边区域的最小宽度为32px
+                    if (moveLen > maxT - 150) moveLen = maxT - 150; //右边区域最小宽度为150px
+
+                    resize[i].style.left = moveLen; // 设置左侧区域的宽度
+                    $('.target.title').css({ maxWidth: moveLen + 'px' })
+                    for (let j = 0; j < left.length; j++) {
+                        left[j].style.width = moveLen + "px";
+                        mid[j].style.width = box[i].clientWidth - moveLen - 10 + "px";
+                    }
+                };
+                // 鼠标松开事件
+                document.onmouseup = function (evt) {
+                    //颜色恢复
+                    resize[i].style.borderColor = "#d6d6d6";
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    resize[i].releaseCapture && resize[i].releaseCapture(); //当你不在需要继续获得鼠标消息就要应该调用ReleaseCapture()释放掉
+                };
+                resize[i].setCapture && resize[i].setCapture(); //该函数在属于当前线程的指定窗口里设置鼠标捕获
+                return false;
+            };
+        }
+    }
+    function keyFormat(params) {
+        let arr = params.split('.');
+        let str = ''
+        for (let i = 0; i < arr.length - 1; i++) {
+            str += `<span style="color:#999">${arr[i]}.</span>`
+        }
+        str += arr[arr.length - 1];
+        return str;
+    }
+    template.defaults.imports.keyFormat = keyFormat;
+    let timer = null
+    let arr = {"id":381427,"project_id":2355975,"name":"MacauQRCodeDetecAPI","url":"a6153428c5452dc3","salt":"0d8b811c4bb62b6e","password":"","env_id":"-1","create_time":1651579664,"target_id":-1,"target_type":"diy","expire_days":-1,"expire_time":-1,"project_name":"carrotPeanutButter的私有项目","portrait":"https:\/\/img.cdn.apipost.cn\/user\/default_profile_photo\/Vector-3.png","nick_name":"carrotPeanutButter","publisher":"carrotPeanutButter","pub_name":"MacauQRCodeDetecAPI","project":{"vars":{"request":{"header":[{"is_checked":"1","type":"Text","key":"","value":"","description":""}],"query":[{"is_checked":"1","type":"Text","key":"","value":"","description":""}],"cookie":[],"body":[{"is_checked":"1","type":"Text","key":"","value":"","description":""}]},"script":{"pre_script":"","test":""},"variable":[],"auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}},"methods":["POST","GET","PUT","PATCH","DELETE","COPY","HEAD","OPTIONS","LINK","UNLINK","PURGE","LOCK","UNLOCK","PROPFIND","VIEW"],"mark":[{"key":"developing","name":"开发中","color":"#3A86FF"},{"key":"complated","name":"已完成","color":"#2BA58F"},{"key":"modifying","name":"需修改","color":"#EC4646"}]}},"children":[{"local_target_id":"e85b8d24-8b3b-4f7c-8b7a-66ce7e08b419","local_parent_id":"0","name":"MacauQRCodeDetecAPI","method":"POST","mark":"developing","is_doc":0,"target_type":"folder","status":1,"sort":2,"create_dtime":1651578734,"update_dtime":1651578735,"target_id":28104518,"create_users":{"create_user":"carrotPeanutButter","update_user":"carrotPeanutButter"},"request":{"description":"API for MacauQRCodeDetec","header":[],"query":[],"body":[],"auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}}},"script":{"pre_script":"","test":""},"children":[{"local_target_id":"dc7221a9-184f-4beb-b773-a841f5a21233","local_parent_id":"e85b8d24-8b3b-4f7c-8b7a-66ce7e08b419","name":"run4det","method":"POST","mark":"complated","is_doc":0,"target_type":"api","status":1,"sort":1,"create_dtime":1651578901,"update_dtime":1651585071,"target_id":28104547,"create_users":{"create_user":"carrotPeanutButter","update_user":"carrotPeanutButter"},"request":{"url":"http:\/\/localhost:8000\/run4det","description":"## This interface is used to implement the detection function\n\n## 此接口用于实现检测功能","auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}},"body":{"mode":"form-data","parameter":[{"is_checked":1,"type":"File","key":"uploadFile","value":"C:\\Users\\Yemao Luo\\Desktop\\testImg_Fail.jpg","not_null":1,"description":"Img for detection","field_type":"File","__DATAKEY__":"1d5981be-4ebe-481a-882c-23cd64e64243","key_var":"","value_var":""}],"raw":"","raw_para":[]},"event":{"pre_script":"","test":""},"header":{"parameter":[]},"query":{"parameter":[]},"cookie":{"parameter":[]},"resful":{"parameter":[]},"url_var":"http:\/\/localhost:8000\/run4det"},"response":{"success":{"raw":"{\r\n\t\"confidence\": \"0.9159056544303894\",\r\n\t\"start_point\": \"(310, 709)\",\r\n\t\"end_point\": \"(774, 1177)\",\r\n\t\"time\": \"0.22400188446044922s\"\r\n}","parameter":[]},"error":{"raw":"{\r\n\t\"flag\": false\r\n}","parameter":[]}}},{"local_target_id":"99ac487f-f765-4eef-98f5-bad57bc0fab9","local_parent_id":"e85b8d24-8b3b-4f7c-8b7a-66ce7e08b419","name":"run4ocr","method":"POST","mark":"complated","is_doc":0,"target_type":"api","status":1,"sort":2,"create_dtime":1651579289,"update_dtime":1651585073,"target_id":28104635,"create_users":{"create_user":"carrotPeanutButter","update_user":"carrotPeanutButter"},"request":{"url":"http:\/\/localhost:8000\/run4ocr","description":"## This interface is used to implement the detection and OCR function\n\n## 此接口用于实现检测和OCR功能","auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}},"body":{"mode":"form-data","parameter":[{"is_checked":1,"type":"File","key":"uploadFile","value":"C:\\Users\\Yemao Luo\\Desktop\\testImg_Fail.jpg","not_null":1,"description":"Img for detection","field_type":"File","__DATAKEY__":"8f96b33c-612a-460f-bd96-17b52d7eac97","key_var":"","value_var":""}],"raw":"","raw_para":[]},"event":{"pre_script":"","test":""},"header":{"parameter":[]},"query":{"parameter":[]},"cookie":{"parameter":[]},"resful":{"parameter":[]},"url_var":"http:\/\/localhost:8000\/run4ocr"},"response":{"success":{"raw":"{\r\n\t\"flag\": true,\r\n\t\"result_det\": {\r\n\t\t\"Conf\": \"0.7423779368400574\",\r\n\t\t\"S_Point\": \"[149, 530]\",\r\n\t\t\"E_Point\": \"[865, 1452]\",\r\n\t\t\"D_Time\": \"0.3859999179840088s\"\r\n\t},\r\n\t\"result_ocr\": {\r\n\t\t\"Name\": \"罗叶茂\",\r\n\t\t\"Sex\": \"男\",\r\n\t\t\"Exp\": \"2021\/09\/21\",\r\n\t\t\"Flag\": true,\r\n\t\t\"O_Time\": \"2.398998498916626s\"\r\n\t}\r\n}","parameter":[]},"error":{"raw":"{\r\n\t\"flag\": false\r\n}","parameter":[]}}}]}]};
+    function GetUrlQuery(uri) {
+        let url = '';
+        if (typeof uri === 'undefined') {
+            url = window.location.search;
+        } else {
+            url = `?${uri.split('?')[1]}`;
+        }
+        const theRequest = {};
+        if (url.indexOf('?') !== -1) {
+            const str = url.substr(1);
+            const strs = str.split('&');
+            for (let i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1]);
+            }
+        }
+        return theRequest;
+    };
+
+    function findFatherDom(el) {
+        if (el.parent().parent().children(":first").hasClass('folder')) {
+            el.parent().parent().show()
+            console.log(el.parent().parent());
+            el.parent().parent().children().show()
+            el.parent().parent().children(":first").find('.folder_select').removeClass('right').addClass('down')
+            el.parent().parent().children(":first").nextAll('.folder').find('folder_select').removeClass('down').addClass('right')
+            findFatherDom(el.parent().prev())
+        } else {
+            el.parent().children().show()
+            return
+        }
+    }
+    window.onload = function () {
+        // const { url, salt } = GetUrlQuery();
+        const head_obj = {
+            portrait: arr.portrait,
+        }
+        let head_html = template('doc-head-tpl', head_obj);
+
+        $('.doc-head .container').html(head_html)
+        let _html = template('template-target-sidebar-list-tpl', {
+            list: arr.children
+        });
+
+        $('.new').html(_html)
+        let project_name_html = template('project-name-tpl', {
+            project_name: arr.project_name
+        });
+        $('.box-first .title').html(project_name_html)
+
+        $('.target.folder').find('.folder_select').removeClass('down').addClass('right')
+        $('.target.folder').nextAll().hide()
+        let urlLink = window.location.href;
+        let id = urlLink.split('#')[1] ? urlLink.split('#')[1] : '001'
+        if ($(`.target[data-target_id="${id}"]`).length > 0) {
+            if (id != '001') {
+                findFatherDom($(`.target[data-target_id="${id}"]`))
+            }
+
+            $(`.target[data-target_id="${id}"]`).trigger('click')
+        } else {
+            location.href = urlLink.split('#')[0] + "#001"
+            return
+        }
+        var resize = document.getElementsByClassName("bar");
+        var left = document.getElementsByClassName("box-first");
+        var mid = document.getElementsByClassName("box-third");
+        var box = document.getElementsByClassName("box");
+        console.log(123434);
+        dragControllerDiv(resize, left, mid, box);
+        $('.target.folder').find('.folder_select').removeClass('down').addClass('right')
+        $('.target.folder').nextAll().hide()
+
+    }
+    $('.body').show()
+    $(document).on('click', '.target', function () {
+        let _local_target_id = $(this).attr('data-target_id');
+        let urlLink = window.location.href.split('#')[0] + '#' + _local_target_id;
+
+        const { url, salt } = GetUrlQuery();
+        const token = localStorage.getItem(`token${url}`);
+        history.replaceState(null, null, urlLink)
+        console.log(url);
+
+        $('.target').each((i, el) => {
+            $(el).removeClass('active')
+        })
+        if ($(this).attr('data-type') == 'folder') {
+            $('.box-nav').show()
+            $(this).nextAll().show()
+            $(this).find('.folder_select').removeClass('right').addClass('down')
+            $('.box-nav .folder').show()
+            $('.box-nav .api').hide()
+        } else if ($(this).attr('data-type') == 'example' || $(this).attr('data-type') == 'api') {
+            $('.box-nav').show()
+            $('.box-nav .api').show()
+            $('.box-nav .folder').hide()
+        } else {
+            $('.box-nav').hide()
+        }
+
+        $(this).addClass('active')
+        // if (_local_target_id == 001 || !_local_target_id) {
+        //   return;
+        // }
+        let newdata = JSON.parse(JSON.stringify(arr))
+        let LevelArr = []
+
+        function levelTree(arr1, newarr) {
+            arr1.forEach(item => {
+                if (item.children && item.children.length > 0) {
+                    newarr.push(item)
+                    levelTree(item.children, newarr)
+                } else {
+                    newarr.push(item)
+                }
+            })
+        }
+
+        levelTree(newdata.children, LevelArr)
+        LevelArr.forEach(item => {
+            if (item.local_target_id == _local_target_id) {
+                if (item.target_type == 'example' || item.target_type == 'api') {
+                    switch (item.request.body.mode) {
+                        case "none":
+                            break;
+                        case "form-data":
+                            item.request.body.mode = "multipart/form-data";
+                            break;
+                        case "urlencoded":
+                            item.request.body.mode = "application/x-www-form-urlencoded";
+                            break;
+                        case "json":
+                            item.request.body.mode = "application/json";
+                            break;
+                        case "xml":
+                            item.request.body.mode = "application/xml";
+                            break;
+                        case "javascript":
+                            item.request.body.mode = "application/javascript";
+                            break;
+                        case "plain":
+                            item.request.body.mode = "text/plain";
+                            break;
+                        case "html":
+                            item.request.body.mode = "text/html";
+                            break;
+                    }
+                    $('.template-nav-menu').html(template('template-nav-menu-tpl', item));
+                    if (item.target_type != 'folder') {
+                        let _export_data = new ClipboardJS('.CopyCurrentData', {
+                            text: function (trigger) {
+                                return trigger.getAttribute('data-clipboard-text');
+                            }
+                        });
+                        console.log(_export_data);
+                        _export_data.on('success', function (e) {
+                            $('.CopyCurrentData').text('已复制').addClass('success');
+                            e.clearSelection();
+                        });
+                        _export_data.on('error', function (e) {
+                            console.log('失败');
+                        });
+                    }
+                }
+                arr?.project?.vars?.mark.forEach((it) => {
+                    if (it.key == item.mark) {
+                        if (it.color == '') {
+                            if (item.mark == 'developing') {
+                                item.markName = '开发中'
+                                item.markColor = 'rgb(58, 134, 255)'
+                            }
+                            if (item.mark == 'complated') {
+                                item.markName = '已完成'
+                                item.markColor = 'rgb(46, 196, 182)'
+                            }
+                            if (item.mark == 'modifying') {
+                                item.markName = '需修改'
+                                item.markColor = 'rgb(236, 70, 70)'
+                            }
+                        } else {
+                            item.markName = it.name
+                            item.markColor = it.color
+                        }
+                    }
+                })
+                let _html = template('template-example-doc-tpl', item);
+                $('.preview-markdown').html(_html)
+                if (item.target_type == 'folder') {
+                    const folderData = { ...item }
+                    if (item.target_type == 'folder') {
+                        folderData?.request?.header?.forEach((it, index) => !it.key && folderData.request?.header.splice(index, 1))
+                        folderData?.request?.query?.forEach((it, index) => !it.key && folderData.request?.query.splice(index, 1))
+                        folderData?.request?.body?.forEach((it, index) => !it.key && folderData.request?.body.splice(index, 1))
+                    }
+                    let _html = template('template-example-doc-tpl', folderData);
+                    if ($('table.header tr').length <= 1) {
+                        $('table.header').parent().hide()
+                        $('table.header').parent().prev().hide()
+                        $('.nav-folder-btn[data-id="1"]').hide()
+                        // $('table.header tr').after('<tr><td colspan="4" style="text-align:center">暂无数据</td></tr>')
+                    }
+                    if ($('table.query tr').length <= 1) {
+                        $('table.query').parent().hide()
+                        $('table.query').parent().prev().hide()
+                        $('.nav-folder-btn[data-id="2"]').hide()
+                        // $('table.query tr').after('<tr><td colspan="4" style="text-align:center">暂无数据</td></tr>')
+                    }
+                    if ($('table.body tr').length <= 1) {
+                        $('table.body').parent().hide()
+                        $('table.body').parent().prev().hide()
+                        $('.nav-folder-btn[data-id="3"]').hide()
+                        // $('table.body tr').after('<tr><td colspan="4" style="text-align:center">暂无数据</td></tr>')
+                    }
+                    if ($('table.header tr').length <= 1 && $('table.query tr').length <= 1 && $('table.body tr').length <= 1) {
+                        $('table.header').parents('.markdown-request').prev().hide()
+                        $('.box-nav .nav-folder-btn[data-id="0"]').hide()
+                        $('.preview-markdown .markdown-request').after('<div style="overflow: hidden;text-align: center;height: 100%;"><img src="https://img.cdn.apipost.cn/v6/docs/img/empty.svg" style="width:100px;margin: 70px auto 20px;;">暂无参数</div>')
+
+                    }
+                    hljs.initHighlighting();
+                } else {
+                    let _export_data = new ClipboardJS('.CopyCurrentData', {
+                        text: function (trigger) {
+                            return trigger.getAttribute('data-clipboard-text');
+                        }
+                    });
+                    console.log(_export_data);
+                    _export_data.on('success', function (e) {
+                        $('.CopyCurrentData').text('已复制').addClass('success');
+                        e.clearSelection();
+                    });
+                    _export_data.on('error', function (e) {
+                        console.log('失败');
+                    });
+                    $('.CopyCurrentData').attr('data-clipboard-text', JSON.stringify(item));
+                }
+                try {
+                    let obj = item.request.body.raw_para.map(item => {
+                        let arr = item.key.split('.')
+                        item.newKey = arr[arr.length - 1]
+                        return item
+                    })
+
+                    let editor = new JsonEditor('#request_body_raw_editor_json', JSON5.parse($('#request_body_raw_editor_input').val()), {}, obj).load(JSON5.parse($('#request_body_raw_editor_input').val()), obj)
+                } catch (e) {
+                    console.log(e);
+                }
+                // 成功响应示例
+                try {
+                    let obj = item.response.success.parameter.map(item => {
+                        let arr = item.key.split('.')
+                        item.newKey = arr[arr.length - 1]
+                        return item
+                    })
+                    let editor = new JsonEditor('#response_success_editor_json', JSON5.parse($('#response_success_editor_input').val()), {}, obj).load(JSON5.parse($('#response_success_editor_input').val()), obj)
+                } catch (e) { console.log(e); }
+                // 失败响应示例
+                try {
+                    let obj = item.response.error.parameter.map(item => {
+                        let arr = item.key.split('.')
+                        item.newKey = arr[arr.length - 1]
+                        return item
+                    })
+
+                    let editor = new JsonEditor('#response_error_editor_json', JSON5.parse($('#response_error_editor_input').val()), {}, obj).load(JSON5.parse($('#response_error_editor_input').val()), obj)
+                } catch (e) { console.log(e); }
+                aptIndent.init();
+            }
+        })
+        $("table").colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging",
+            resizeMode: 'fit'
+        });
+    })
+        .on('click', '.control', function (e) {
+            e.stopPropagation()
+            let type = $(this).find('.folder_select').hasClass('down')
+            if (type) {
+                $(this).find('.folder_select').removeClass('down').addClass('right')
+            } else {
+                $(this).find('.folder_select').removeClass('right').addClass('down')
+            }
+            $(this).parents('.target').nextAll().toggle()
+        })
+        .on('input', '.search', function (e) {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                let searchVal = $(this).val().toLocaleLowerCase()
+                let TreeData = JSON.parse(JSON.stringify(arr.children))
+                let searchArr = []
+                let LevelArr = []
+                let fatherArr = []
+                function openTree(tree, parent_id) {
+                    tree.forEach((item) => {
+                        if (item.children && item.children.length > 0) {
+                            openTree(item.children, item.local_target_id)
+                        }
+                        item.parent_id = parent_id
+                    })
+                }
+                openTree(TreeData, 0);
+                function levelTree(arr, newarr) {
+                    arr.forEach(item => {
+                        if (item.children && item.children.length > 0) {
+                            newarr.push(item)
+                            levelTree(item.children, newarr)
+                        } else {
+                            newarr.push(item)
+                        }
+                    })
+                }
+                levelTree(TreeData, LevelArr)
+                if ($.trim(searchVal) != '') {
+                    LevelArr.forEach(item => {
+                        if (item.target_type == 'folder') {
+                            if (item.name.toString().toLocaleLowerCase().indexOf(searchVal) > -1) {
+                                searchArr.push(item)
+                            }
+                        } else {
+                            if (item.name.toString().toLocaleLowerCase().indexOf(searchVal) > -1 || item.method.toString().toLocaleLowerCase().indexOf(searchVal) > -1) {
+                                searchArr.push(item)
+                            }
+                        }
+                    })
+                    searchArr.forEach(item => {
+                        findFather(fatherArr, LevelArr, item)
+                    })
+
+                    function findFather(tempArr, arr, self) {
+                        if (self.parent_id != 0) {
+                            arr.filter(item => {
+                                if (self.parent_id == item.local_target_id) {
+                                    findFather(tempArr, arr, item);
+                                    if (tempArr.indexOf(item) === -1) {
+                                        tempArr.push(item);
+                                    }
+                                }
+                            })
+                        }
+                    }
+
+                    let finnalArr = searchArr.concat(fatherArr)
+                    $('.target').hide()
+                    $('.target[data-target_id="001"]').show()
+                    finnalArr.forEach(item => {
+                        $(`.target[data-target_id="${item.local_target_id}"]`).parent().show()
+                        $(`.target[data-target_id="${item.local_target_id}"]`).show()
+                        $('.target.folder').find('.folder_select').removeClass('right').addClass('down')
+                    })
+                } else {
+                    $('.target').parent().show()
+                    $('.target').show()
+                }
+            }, 100)
+        })
+        .on('mouseover', '.target.api', function () {
+            // $(this).find('em').css({ visibility: 'visible' })
+        })
+        .on('mouseleave', '.target.api', function () {
+            // $(this).find('em').css({ visibility: 'hidden' })
+        })
+        .on('click', '.nav-btn', function () {
+            let index = parseInt($(this).attr('data-id'))
+            $('.nav-btn').removeClass('cur')
+            $(this).addClass('cur')
+            console.log(index, $('.box-third .title').eq(index)[0]);
+            let top = $('.box-third .title').eq(index)[0].offsetTop
+            $('.box-third').scrollTop(top)
+        })
+        .on('click', '.nav-folder-btn', function () {
+            let index = parseInt($(this).attr('data-id'))
+            $('.nav-folder-btn').removeClass('cur')
+            $(this).addClass('cur')
+            let top = $('.box-third .title').eq(index)[0].offsetTop
+            $('.box-third').scrollTop(top)
+        })
+        .on('click', '.box-first .top', function () {
+            $('.target').removeClass('active')
+            $(this).addClass('active')
+            const obj = { ...arr?.project }
+            obj.create_dtime = arr?.create_time
+            obj.expire_time = arr?.expire_time
+            obj?.vars?.request?.header?.forEach((it, index) => {
+                if (!it.key) {
+                    obj?.vars?.request?.header?.splice(index, 1)
+                }
+            })
+            obj?.vars?.request?.query?.forEach((it, index) => {
+                if (!it.key) {
+                    obj?.vars?.request?.query?.splice(index, 1)
+                }
+            })
+            obj?.vars?.request?.body?.forEach((it, index) => {
+                if (!it.key) {
+                    obj?.vars?.request?.body?.splice(index, 1)
+                }
+            })
+            let _html = template('golbal-env-tpl', obj);
+            $('.preview-markdown').html(_html)
+        })
+        .on('click', 'h3.title', function () {
+            let type = $(this).find('i').hasClass('fa-angle-down')
+            if (type) {
+                $(this).find('i').removeClass('fa-angle-down').addClass('fa-angle-left')
+            } else {
+                $(this).find('i').removeClass('fa-angle-left').addClass('fa-angle-down')
+            }
+            $(this).next().toggle()
+        })
+        .on('mouseover', '.export', function () {
+            $(this).find('.export_panel').show()
+        })
+        .on('mouseleave', '.export', function () {
+            $(this).find('.export_panel').hide()
+        })
+    $(".box-third").scroll(function () {
+        let arr = []
+        $('.box-third .title').each((i, el) => {
+            arr.push($(el)[0].offsetTop)
+        })
+        arr.push(arr[arr.length - 1] + 10000)
+        let topHeight = $(this).scrollTop();
+        if ($('.target.active').hasClass('api')) {
+            for (let index = 0; index < arr.length; index++) {
+                if (arr[index] < topHeight && topHeight < arr[index + 1]) {
+                    $('.nav-btn').removeClass('cur')
+                    $('.nav-btn').eq(index).addClass('cur')
+                }
+            }
+        } else {
+            for (let index = 0; index < arr.length; index++) {
+                if (arr[index] < topHeight && topHeight < arr[index + 1]) {
+                    $('.nav-folder-btn').removeClass('cur')
+                    $('.nav-folder-btn').eq(index).addClass('cur')
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+
+</html>
