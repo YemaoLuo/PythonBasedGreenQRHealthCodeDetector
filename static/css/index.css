@@ -1,0 +1,43 @@
+#tablemain {
+    margin-top: 5px;
+}
+
+.el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    line-height: 50px;
+    margin-top: 65px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.block {
+    margin-top: 20px;
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+.el-slider {
+    margin-top: 35px;
+}
+
+.el-table {
+    text-align: center;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.el-footer {
+    height: 50%;
+}
+
+#refresh {
+    margin-bottom: 20px;
+    width: 20%;
+}
+
+#delete {
+    margin-bottom: 20px;
+    width: 20%;
+}

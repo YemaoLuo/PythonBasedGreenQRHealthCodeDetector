@@ -1,21 +1,59 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>单文件上传</title>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <title>TestUpload</title>
+    <meta content="TestingGui" name="description">
+    <meta content="TestingGui" name="keywords">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link href="/static/plugins/elementui/index.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
 </head>
 <body>
-<br>
-run4ocr
-<form action="/run4ocr" enctype="multipart/form-data" method="post">
-    <input name="uploadFile" type="file" value="请选择文件">
-    <input type="submit" value="上传">
-</form>
-<br>
-run4det
-<form action="/run4det" enctype="multipart/form-data" method="post">
-    <input name="uploadFile" type="file" value="请选择文件">
-    <input type="submit" value="上传">
-</form>
+<div id="app">
+    <el-container>
+        <el-main>
+            <el-tabs type="border-card">
+                <el-tab-pane label="目标检测" align="center">
+                    <el-upload
+                            class="upload-demo"
+                            drag
+                            name="uploadFile"
+                            encrypt="multipart/form-data"
+                            action="/run4det"
+                            :on-success="uploadSuccess1"
+                            :on-error="uploadFail">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件</div>
+                    </el-upload>
+                    <div id="result1"></div>
+                </el-tab-pane>
+                <el-tab-pane label="目标检测与OCR">
+                    <el-upload
+                            class="upload-demo"
+                            drag
+                            name="uploadFile"
+                            encrypt="multipart/form-data"
+                            action="/run4ocr"
+                            :on-success="uploadSuccess2"
+                            :on-error="uploadFail">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件</div>
+                    </el-upload>
+                    <div id="result2"></div>
+                </el-tab-pane>
+            </el-tabs>
+        </el-main>
+    </el-container>
+</div>
 </body>
+<script src="/static/plugins/js/vue.js"></script>
+<script src="/static/plugins/elementui/index.js"></script>
+<script src="/static/plugins/js/axios-0.18.0.js"></script>
+<script src="/static/js/index.js"></script>
+<script src="/static/js/jsonviewer.js"></script>
 </html>
