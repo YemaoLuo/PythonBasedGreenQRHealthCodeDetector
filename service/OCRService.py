@@ -179,12 +179,16 @@ def readtext(img4ocr):
     flag = False
     if re.search(r'可以通行', str(result)):
         flag = True
+    flag2 = False
+    if re.search(r'全程接种', str(result)):
+        flag2 = True
 
     result_set = {
         'Name': name,
         'Sex': sex,
         'Exp': expDate,
         'Flag': flag,
+        'Vaccine': flag2,
         'O_Time': '{0}s'.format(str(time.time() - time1)),
     }
     return result_set
