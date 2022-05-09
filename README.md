@@ -1,7 +1,9 @@
 # PythonBasedGreenQRHealthCodeDetector
 Macao Health Code Green Code Recognition and OCR Information Recognition
+[Detect Core](https://github.com/carrotPeanutButter/PythonBasedGreenQRHealthCodeDetector/tree/master/service)
 
 澳门健康码绿码识别与OCR信息识别
+[检测核心代码](https://github.com/carrotPeanutButter/PythonBasedGreenQRHealthCodeDetector/tree/master/service)
 
 
 # To get started
